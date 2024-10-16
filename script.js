@@ -29,7 +29,6 @@ const Gameboard = (function(){
     }
 
     function getPlayers() {
-        console.log(players);
         return players;
     }
 
@@ -38,25 +37,35 @@ const Gameboard = (function(){
     }
 
     function getCurrentPlayer() {
-        console.log(currentPlayer);
         return currentPlayer;
     }
 
     function _switchTurn() {
         currentPlayer = currentPlayer === players[0]?players[1]:players[0];
+        console.log(currentPlayer);
+        console.log(`It is ${currentPlayer.name}'s turn. Let's play`);
+    }
+
+    function play(y,x) {
+        if(gameboard[y][x]===0) {
+            gameboard[y][x] = getCurrentPlayer().token;
+            _render();
+            _switchTurn();
+        }else {
+            console.log("This position is occupied. Try again");
+        }
     }
 
     return {
         addPlayer: addPlayer,
         getPlayers: getPlayers,
         setCurrentPlayer: setCurrentPlayer,
-        getCurrentPlayer: getCurrentPlayer
-    
+        getCurrentPlayer: getCurrentPlayer,
+        play: play
     }
 })(document);
 
 Gameboard.addPlayer('Player1');
 Gameboard.addPlayer('Player2');
-Gameboard.getPlayers();
 Gameboard.setCurrentPlayer();
-Gameboard.getCurrentPlayer();
+Gameboard.play(1,2);
