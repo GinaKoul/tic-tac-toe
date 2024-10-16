@@ -56,6 +56,12 @@ const Gameboard = (function(){
         }
     }
 
+    function findWinner() {
+        for(let i = 0; i < rows; i++) {
+            
+        }
+    }
+
     return {
         addPlayer: addPlayer,
         getPlayers: getPlayers,
