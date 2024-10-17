@@ -1,3 +1,4 @@
+/* Variables */
 :root {
     --color-main: #f8ccf9;
     --color-main-dark: #7e4b8b;
@@ -5,6 +6,9 @@
     --color-secondary: #ae9da9;
     --color-secondary-dark: #aaaaaa;
     --default-font-size: 16px;
+    --heading-1: 2.5rem;
+    --heading-2: 2rem;
+    --heading-3: 1.5rem;
     --border-radius: 4px;
     --border-color: var(--color-main);
     --btn-padding-x: 16px;
@@ -13,6 +17,8 @@
     --input-padding-y: var(--btn-padding-y);
     --input-margin-bottom: 22px;
 }
+
+/* Type */
 
 body {
     margin: 0;
@@ -23,12 +29,27 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 16px;
+    padding: 16px;
 }
 
 body:has(.cell) {
     background-color: var(--color-secondary);
 }
+
+h1,h2,h3,p,span {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: var(--default-font-size);
+    font: inherit;
+    vertical-align: baseline;
+}
+
+h1 {font-size: var(--heading-1)}
+h2 {font-size: var(--heading-2)}
+h3 {font-size: var(--heading-3)}
+h1, h2, h3 {font-weight: bold}
 
 /* Modal Dialog */
 
@@ -45,6 +66,8 @@ dialog::backdrop {
     background-color: rgb(0 0 0 / 25%);
     z-index: 10;
 }
+
+/* Forms */
 
 form {
     display: flex;
@@ -73,6 +96,8 @@ input:focus {
     box-shadow: 0 0 2px 2px var(--color-main-dark);
 }
 
+/* General */
+
 button {
     font-weight: 600;
     padding: var(--btn-padding-y) var(--btn-padding-x);
@@ -80,10 +105,12 @@ button {
     border: none;
     border-radius: var(--border-radius);
     outline: none;
+    cursor: pointer;
 }
 
 .row {
     display: flex;
+    align-items: center;
 }
 
 .cell {
@@ -91,7 +118,13 @@ button {
     border: 1px solid var(--color-secondary);
     font-size: 28px;
     aspect-ratio: 1/1;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+    cursor: pointer;
 }
+
+/* Board */
 
 .game-board {
     max-width: 575px;
@@ -104,12 +137,86 @@ button {
     outline: 2px solid var(--color-main-light);
 }
 
+.mark {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    background-position: 50%; 
+}
+
 [data-token='1'] {
-    content: 'o';
-    background-color: var(--color-main);
+    background-image: url('img/o-symbol.svg');
 }
 
 [data-token='2'] {
-    content: 'x';
-    background-color: var(--color-main-dark);
+    background-image: url('img/x-symbol.svg');
+}
+
+/* Players */
+
+.game-details {
+    display: none;
+    flex-shrink: 0;
+    max-width: 400px;
+}
+
+body:has(.cell) .game-details {
+    display: block;
+}
+
+.btn-restart {
+    width: calc(100% - 48px);
+    font-size: 1.125rem;
+    margin: 0 24px;
+    padding: 16px 32px;
+}
+
+.players-info, .game-state {
+    text-align: start;
+    padding: 24px;
+    background-color: var(--color-main-light);
+}
+
+.players-info {
+    margin: 24px 24px 0 24px;
+} 
+
+.game-state {
+    margin: 24px;
+}
+
+.players-info > div {
+    padding: 16px;
+    background-color: var(--color-secondary);
+}
+
+.players-info p, .game-state {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.players-info p, .players-info span {
+    margin-left: 8px;
+    padding-top: 4px;
+}
+
+.players-info h2 {
+    margin-bottom: 16px;
+}
+
+.players-info .row {
+    margin-bottom: 8px;
+}
+
+.players-info > div:not(:last-child) {
+    margin-bottom: 24px;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    body {
+        flex-wrap: wrap;
+    }
 }

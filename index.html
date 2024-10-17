@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="game-details">
+        <h1>Tic Tac Toe</h1>
+        <section id="gameState" class="game-state"></section>
+        <button id="restartGame" class="btn-restart">Restart Game</button>
+        <section id="playersInfo" class="players-info"></section>
+    </div>
     <div id="gameBoard" class="game-board"></div>
     <dialog id="addPlayer1">
         <form>
@@ -22,9 +28,9 @@
             <button value="default">Add Player</button>
         </form>
     </dialog>
-    <script src="pubsub.js"></script>
-    <script src="players.js"></script>
-    <script src="game.js"></script>
-    <script src="board.js"></script>
+    <script src="./js/pubsub.js"></script>
+    <script src="./js/players.js"></script>
+    <script src="./js/game.js"></script>
+    <script src="./js/board.js"></script>
 </body>
 </html>

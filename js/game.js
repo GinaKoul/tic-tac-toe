@@ -6,11 +6,6 @@ const Game = (function(){
     players = [],
     currentPlayer;
 
-    // cache DOM
-
-    // bind events
-    PubSub.on('PlayerAdded',setPlayers);
-    PubSub.on('GameMove',play);
 
     _init();
 
@@ -22,7 +17,16 @@ const Game = (function(){
                 gameboard[i].push(0);
             }
         }
+        _bindEvents();
         _render();
+    }
+
+    function _bindEvents() {
+        PubSub.off('PlayerAdded',setPlayers);
+        PubSub.off('GameMove',play);
+        PubSub.on('PlayerAdded',setPlayers);
+        PubSub.on('GameMove',play);
+        PubSub.on('RestartGame',gameRestart);
     }
 
     function _render() {
@@ -33,16 +37,17 @@ const Game = (function(){
         players = gamePlayers;
         if(players.length >= totalPlayers) {
             PubSub.off('PlayerAdded',setPlayers);
+            PubSub.trigger('DisplayPlayers');
             gameRestart();
         }
     }
 
     function _setCurrentPlayer() {
         currentPlayer = players[0];
-        console.log(`It is ${currentPlayer.name}'s turn. Let's play`);
+        _gameMessage(`It is ${currentPlayer.name}'s turn. Let's play`);
     }
 
-    function getCurrentPlayer() {
+    function _getCurrentPlayer() {
         return currentPlayer;
     }
 
@@ -53,22 +58,35 @@ const Game = (function(){
 
     function _switchTurn() {
         currentPlayer = currentPlayer === players[0]?players[1]:players[0];
-        console.log(currentPlayer);
-        console.log(`It is ${currentPlayer.name}'s turn. Let's play`);
+        _gameMessage(`It is ${currentPlayer.name}'s turn. Let's play`);
+    }
+
+    function _declareWinner() {
+        PubSub.off('GameMove',play);
+        _gameMessage(`${_getCurrentPlayer().name} is the winner`);
+    }
+
+    function _gameOver() {
+        PubSub.off('GameMove',play);
+        _gameMessage('The game is over. No one wins');
     }
 
     function play([y,x]) {
         if(gameboard[y][x]===0) {
-            gameboard[y][x] = getCurrentPlayer().token;
+            gameboard[y][x] = _getCurrentPlayer().token;
             _render();
-            _findWinner()?_declareWinner():_switchTurn();
+            _findWinner()?_declareWinner():null;
         } else {
-            console.log("This position is occupied. Try again");
+            _gameMessage('This position is occupied. Try again');
         }
     }
 
+    function _gameMessage(message) {
+        PubSub.trigger('UpdateState',message);
+    }
+
     function _findWinner() {
-        let testResults,failedResults;
+        let testResults,failedResults,gameOver = true;
 
         // Test horizontal lines
         for(let i = 0; i < rows; i++) {
@@ -82,6 +100,7 @@ const Game = (function(){
             testResults = [];
             for(let i = 0; i < rows; i++) {
                 testResults.push(i!==0?gameboard[i][j] === gameboard[i - 1][j]:gameboard[i][j] !== 0);
+                if(gameboard[i][j] === 0) gameOver = false;
             }
             failedResults = testResults.filter((result) => result === false);
             if(failedResults.length === 0) return true;
@@ -102,15 +121,8 @@ const Game = (function(){
         }
         failedResults = testResults.filter((result) => result === false);
         if(failedResults.length === 0) return true;
-    }
 
-    function _declareWinner() {
-        console.log(`${getCurrentPlayer().name} is the winner`);
-    }
-
-    return {
-        getCurrentPlayer: getCurrentPlayer,
-        gameRestart: gameRestart,
-        play: play
+        // Test if game is over
+        gameOver?_gameOver():_switchTurn();
     }
 })(document||documentMock);
