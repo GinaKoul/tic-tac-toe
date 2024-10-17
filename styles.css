@@ -1,23 +1,115 @@
+:root {
+    --color-main: #f8ccf9;
+    --color-main-dark: #7e4b8b;
+    --color-main-light: #fbf1f9;
+    --color-secondary: #ae9da9;
+    --color-secondary-dark: #aaaaaa;
+    --default-font-size: 16px;
+    --border-radius: 4px;
+    --border-color: var(--color-main);
+    --btn-padding-x: 16px;
+    --btn-padding-y: 8px;
+    --input-padding-x: var(--btn-padding-x);
+    --input-padding-y: var(--btn-padding-y);
+    --input-margin-bottom: 22px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: var(--default-font-size);
+    text-align: center;
+    background-color: var(--color-main-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+}
+
+body:has(.cell) {
+    background-color: var(--color-secondary);
+}
+
+/* Modal Dialog */
+
+dialog {
+    background-color: var(--color-secondary);
+    border: none;
+    outline: none;
+    border-radius: var(--border-radius);
+    -webkit-box-shadow: 0 0 2px 2px var(--color-main);
+    -moz-box-shadow: 0 0 2px 2px var(--color-main);
+    box-shadow: 0 0 2px 2px var(--color-main);
+}
+dialog::backdrop {
+    background-color: rgb(0 0 0 / 25%);
+    z-index: 10;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+}
+
+label {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--input-margin-bottom);
+}
+
+input {
+    padding: var(--input-padding-y) var(--input-padding-x);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    outline: none;
+    margin-bottom: var(--input-margin-bottom);
+}
+
+input:focus {
+    border: 1px solid var(--color-main-dark);
+    -webkit-box-shadow: 0 0 2px 2px var(--color-main-dark);
+    -moz-box-shadow: 0 0 2px 2px var(--color-main-dark);
+    box-shadow: 0 0 2px 2px var(--color-main-dark);
+}
+
+button {
+    font-weight: 600;
+    padding: var(--btn-padding-y) var(--btn-padding-x);
+    background-color: var(--color-main);
+    border: none;
+    border-radius: var(--border-radius);
+    outline: none;
+}
+
 .row {
     display: flex;
 }
 
 .cell {
-    width: 78px;
-    height: 78px;
-    border: 1px solid black;
+    flex: 1 1 33.3%;
+    border: 1px solid var(--color-secondary);
     font-size: 28px;
-    padding: 25px;
+    aspect-ratio: 1/1;
 }
 
 .game-board {
-    border: 1px solid black;
+    max-width: 575px;
+    background-color: var(--color-main-light);
+}
+
+.game-board:has(.cell) {
+    width: 100%;
+    border: 1px solid var(--color-secondary);
+    outline: 2px solid var(--color-main-light);
 }
 
 [data-token='1'] {
     content: 'o';
+    background-color: var(--color-main);
 }
 
 [data-token='2'] {
     content: 'x';
+    background-color: var(--color-main-dark);
 }

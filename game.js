@@ -57,8 +57,7 @@ const Game = (function(){
         console.log(`It is ${currentPlayer.name}'s turn. Let's play`);
     }
 
-    function play(x,y) {
-        // TODO problem here
+    function play([y,x]) {
         if(gameboard[y][x]===0) {
             gameboard[y][x] = getCurrentPlayer().token;
             _render();

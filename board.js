@@ -18,7 +18,7 @@ const Board = (function(doc) {
                 let boardCell = doc.createElement('div');
                 boardCell.classList.add('cell');
                 boardCell.setAttribute('data-token',cell);
-                boardRow.setAttribute('data-row',rowIndex);
+                boardCell.setAttribute('data-row',rowIndex);
                 boardCell.setAttribute('data-col',index);
                 if(cell==0) {
                     boardCell.addEventListener('click',playerMove)
@@ -30,8 +30,6 @@ const Board = (function(doc) {
     }
 
     function playerMove(event) {
-        console.log("hi");
-        // TODO problem here
-        PubSub.trigger('GameMove',[this.getAttribute('data-row'),this.getAttribute('data-column')]);
+        PubSub.trigger('GameMove',[this.getAttribute('data-row'),this.getAttribute('data-col')]);
     }
 })(document||documentMock);
