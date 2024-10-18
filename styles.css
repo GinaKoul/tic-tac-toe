@@ -4,7 +4,6 @@
     --color-main-dark: #7e4b8b;
     --color-main-light: #fbf1f9;
     --color-secondary: #ae9da9;
-    --color-secondary-dark: #aaaaaa;
     --default-font-size: 16px;
     --heading-1: 2.5rem;
     --heading-2: 2rem;
@@ -26,18 +25,29 @@ body {
     font-size: var(--default-font-size);
     text-align: center;
     background-color: var(--color-main-light);
-    padding: 16px;
 }
 
 .container {
     max-width: 1200px;
+    padding: 16px;
     margin: 0 auto;
+}
+
+.main-content {
+    min-height: calc(100vh - 32px - 53px);
     display: grid;
     grid-template-columns: calc(40% - 12px) calc(60% - 12px);
-    grid-template-rows: repeat(3,auto);
+    grid-template-rows: repeat(4,auto);
     gap: 24px;
     align-items: center;
     margin: 0 auto;
+}
+
+footer {
+    
+    background-color:  var(--color-main);
+    font-size: 1.125rem;
+    font-weight: 500;
 }
 
 body:has(.cell) {
@@ -241,9 +251,6 @@ body:has(.cell) .game-details {
     
     .players-info {
         grid-area: 3/1/4/3;
-    }
-
-    .players-info {
         display: flex;
         gap: 24px;
     }
@@ -265,10 +272,12 @@ body:has(.cell) .game-details {
     
     .game-board {
         max-width: 575px;
-        grid-area: 1/2/4/3;
+        /* grid-area: 1/2/4/3; */
+        grid-area: 1/2/3/3;
     }
     
     .players-info {
-        grid-area: 2/1/4/2;
+        /* grid-area: 2/1/4/2; */
+        grid-area: 2/1/3/2;
     }
 }
